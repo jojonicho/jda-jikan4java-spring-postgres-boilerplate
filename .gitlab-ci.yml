@@ -1,0 +1,38 @@
+image: gradle:6.8.3-jdk11
+
+variables:
+  GRADLE_OPTS: "-Dorg.gradle.daemon=false"
+
+before_script:
+  - export GRADLE_USER_HOME=`pwd`/.gradle
+
+stages:
+  - test
+
+test:ExampleBot:
+  stage: test
+  script:
+    - gradle :ExampleBot:check
+    - gradle :ExampleBot:jacocoTestReport
+    - cat ExampleBot/build/reports/jacoco/test/html/index.html
+  services:
+    - "postgres:latest"
+  variables:
+    DATABASE_URL: jdbc:postgresql://postgres:5432/postgres
+    POSTGRES_USER: postgres
+    POSTGRES_DB: postgres
+    POSTGRES_PASSWORD: postgres
+    SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/postgres
+    SPRING_DATASOURCE_USER: postgres
+    SPRING_DATASOURCE_PASSWORD: postgres
+
+  only:
+    - /.*tutorial[_-].*5/
+  except:
+    - branches@csui-advprog-2019/advprog-tutorial-2021
+
+cache:
+  key: "$CI_COMMIT_REF_NAME"
+  paths:
+    - $GRADLE_USER_HOME/wrapper
+    - $GRADLE_USER_HOME/caches

@@ -1,0 +1,96 @@
+plugins {
+    id 'org.springframework.boot' version '2.4.4'
+    id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+    id 'java'
+    id 'jacoco'
+}
+
+group = 'jojonicho'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '11'
+targetCompatibility = '11'
+
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+
+repositories {
+    mavenCentral()
+    jcenter()
+    maven { url 'https://jitpack.io' }
+}
+
+dependencies {
+
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+
+    // https://mvnrepository.com/artifact/org.springframework.security/spring-security-core
+    implementation group: 'org.springframework.security', name: 'spring-security-core', version: '5.4.5'
+
+    implementation('io.jsonwebtoken:jjwt:0.2')
+
+// https://mvnrepository.com/artifact/net.dv8tion/JDA
+    implementation group: 'net.dv8tion', name: 'JDA', version: '4.2.0_197'
+
+// https://mvnrepository.com/artifact/com.jagrosh/jda-utilities
+    implementation group: 'com.jagrosh', name: 'jda-utilities', version: '3.0.5'
+
+    // https://mvnrepository.com/artifact/com.mashape.unirest/unirest-java
+    implementation group: 'com.mashape.unirest', name: 'unirest-java', version: '1.4.9'
+
+    implementation 'com.github.Doomsdayrs:Jikan4java:v2.0.0'
+
+    compileOnly 'org.projectlombok:lombok'
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
+    runtimeOnly 'org.postgresql:postgresql'
+    annotationProcessor 'org.projectlombok:lombok'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.springframework.security:spring-security-test'
+
+}
+
+task fatJar(type: Jar) {
+    manifest {
+        attributes 'Main-Class': 'src.main.java.com.jagrosh.examplebot.ExampleBot'
+    }
+
+    from {
+        configurations.compile.collect {
+            dependency ->
+                if (dependency.directory) {
+                    return dependency
+                } else {
+                    return zipTree(dependency)
+                }
+        }
+    }
+    with jar
+}
+
+
+//jacocoTestReport {
+//    dependsOn test
+//    reports {
+//        xml.enabled true
+//        html.enabled true
+//        xml.destination file("${buildDir}/jacoco/jacoco.xml")
+//        html.destination file("${buildDir}/reports/jacoco/test/html")
+//    }
+//}
+
+test {
+    useJUnitPlatform()
+//    finalizedBy jacocoTestReport
+}
+
+jacocoTestReport {
+    afterEvaluate {
+        classDirectories.setFrom(files(classDirectories.files.collect {
+            fileTree(dir: it, exclude: ['**/*Application**'])
+        }))
+    }
+}

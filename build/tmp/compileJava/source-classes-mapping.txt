@@ -1,0 +1,11 @@
+com/jojonicho/examplebot/commands/HelloCommand.java
+ com.jojonicho.examplebot.commands.HelloCommand
+com/jojonicho/examplebot/commands/ChooseCommand.java
+ com.jojonicho.examplebot.commands.ChooseCommand
+com/jojonicho/examplebot/commands/CatCommand.java
+ com.jojonicho.examplebot.commands.CatCommand
+ com.jojonicho.examplebot.commands.CatCommand$1
+com/jojonicho/examplebot/commands/BobCommand.java
+ com.jojonicho.examplebot.commands.BobCommand
+com/jojonicho/examplebot/ExampleBot.java
+ com.jojonicho.examplebot.ExampleBot
