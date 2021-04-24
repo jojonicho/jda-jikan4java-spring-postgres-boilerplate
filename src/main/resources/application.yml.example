@@ -1,0 +1,6 @@
+discord:
+  token: "yourtoken.here"
+  owner_id: "264258056416657419"
+
+server:
+  port: 5050

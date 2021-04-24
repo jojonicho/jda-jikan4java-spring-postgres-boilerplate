@@ -1,9 +1,13 @@
 # ExampleBot
-A bot showcasing the Command Client in the JDA-Utilities library
+A bot showcasing the Command Client in the JDA-Utilities library, extended with Jikan4Java, Postgres, and Gradle.
 
 # Dependencies
 * [JDA](https://github.com/DV8FromTheWorld/JDA)
 * [JDA-Utilities](https://github.com/JDA-Applications/JDA-Utilities)
+* Jikan4Java
+* Postgres
 
-# Note
-This bot is not really intended to be run by itself. It could be, but it doesn't really... do anything; just the most basic commands. Instead, the intention is that it can be used to show the combined power of JDA and the JDA-Utilities libraries.
+# Prerequisites
+1. replace `src/main/resources/application.yml.example` with `src/main/resources/application.yml` and don't forget to add your own bot's token
+2. make sure postgres is running, customize it in `src/main/resources/application.properties`
+3. all done!
